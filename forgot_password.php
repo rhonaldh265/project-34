@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Password   = getenv('SMTP_PASSWORD');       
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 465;
+            $mail->SMTPDebug = 2; // This will print the actual conversation with Google
             $mail->Timeout    = 20;
 
             $mail->setFrom('ronaldkiprotich001@gmail.com', 'Safari App Support');
