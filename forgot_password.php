@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Username   = 'ronaldkiprotich001@gmail.com'; 
             $mail->Password   = getenv('SMTP_PASSWORD');       
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            $mail->Port       = 465;
+            $mail->Timeout    = 20;
 
             $mail->setFrom('ronaldkiprotich001@gmail.com', 'Safari App Support');
             $mail->addAddress($email);
