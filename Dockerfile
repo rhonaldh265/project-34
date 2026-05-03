@@ -21,5 +21,7 @@ WORKDIR /var/www/html
 # This bypasses the version mismatch error you saw
 RUN composer install --no-interaction --optimize-autoloader --ignore-platform-req=ext-mongodb
 
+# Tell Apache to recognize signup.php as an index file
+RUN echo "DirectoryIndex signup.php index.php index.html" >> /etc/apache2/apache2.conf
 # Expose the port Render expects
 EXPOSE 80
