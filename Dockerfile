@@ -1,7 +1,6 @@
-# Use an official PHP image with Apache
 FROM php:8.2-apache
 
-# Install MongoDB driver dependencies
+# Install dependencies and the MongoDB extension
 RUN apt-get update && apt-get install -y \
     libssl-dev \
     unzip \
@@ -11,17 +10,14 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy your files into the web server directory
+# Copy project files
 COPY . /var/www/html/
-
-# Set working directory
 WORKDIR /var/www/html
 
-# Run composer install but ignore the platform check for ext-mongodb
-# This bypasses the version mismatch error you saw
-RUN composer install --no-interaction --optimize-autoloader --ignore-platform-req=ext-mongodb
+# Run composer install (Standard version)
+RUN composer install --no-interaction --optimize-autoloader
 
-# Tell Apache to recognize signup.php as an index file
-RUN echo "DirectoryIndex signup.php index.php index.html" >> /etc/apache2/apache2.conf
-# Expose the port Render expects
+# Set the homepage to signup.php
+RUN echo "DirectoryIndex signup.php index.php" >> /etc/apache2/apache2.conf
+
 EXPOSE 80
