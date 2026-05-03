@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 
 // 1. YOUR CONNECTION STRING
 // REPLACE 'YourRealPasswordHere' with the password you set in MongoDB Atlas Database Access
-$pass = "YourRealPasswordHere"; 
+$pass = "Towett1"; 
 $connectionString = "mongodb+srv://ronaldkiprotich001_db_user:" . $pass . "@cluster0.euqh3vy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 try {
