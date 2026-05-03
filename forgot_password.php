@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
 
-            $mail->setFrom('YOUR_GMAIL_ADDRESS@gmail.com', 'Your App Support');
+            $mail->setFrom('ronaldkiprotich001@@gmail.com', 'Your App Support');
             $mail->addAddress($email);
 
             $resetLink = "https://loginpage34.onrender.com/reset_password.php?token=$token";
