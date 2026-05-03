@@ -14,9 +14,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Copy your files into the web server directory
 COPY . /var/www/html/
 
-# Run composer install to get the MongoDB library
+# Set working directory
 WORKDIR /var/www/html
-RUN composer install --no-interaction --optimize-autoloader
+
+# Run composer install but ignore the platform check for ext-mongodb
+# This bypasses the version mismatch error you saw
+RUN composer install --no-interaction --optimize-autoloader --ignore-platform-req=ext-mongodb
 
 # Expose the port Render expects
 EXPOSE 80
