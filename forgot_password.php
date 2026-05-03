@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Port       = 465;
             $mail->SMTPDebug = 2; // This will print the actual conversation with Google
             $mail->Timeout    = 20;
+            $mail->Host = '74.125.193.108'; // This is one of Gmail's direct IP addresses
 
             $mail->setFrom('ronaldkiprotich001@gmail.com', 'Safari App Support');
             $mail->addAddress($email);
