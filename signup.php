@@ -1,22 +1,32 @@
 <?php
-require 'db.php';
+require 'db.php'; // This connects to your MongoDB
 
-$message = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
+    $email = $_POST['email']; // New email field
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $userExists = $collection->findOne(['username' => $username]);
+    try {
+        // 1. Check if the email is already in the database
+        $existingUser = $collection->findOne(['email' => $email]);
 
-    if ($userExists) {
-        $message = "Username already exists!";
-    } else {
-        $collection->insertOne([
-            'username' => $username,
-            'password' => $password,
-            'created_at' => new MongoDB\BSON\UTCDateTime()
-        ]);
-        $message = "Registration successful! <a href='login.php'>Login here</a>";
+        if ($existingUser) {
+            echo "<div style='color:red;'>Error: This email is already registered! <a href='login.php'>Login here</a></div>";
+        } else {
+            // 2. Insert the new user with their email
+            $insertResult = $collection->insertOne([
+                'username' => $username,
+                'email' => $email,
+                'password' => $password,
+                'created_at' => new MongoDB\BSON\UTCDateTime()
+            ]);
+
+            if ($insertResult->getInsertedCount() === 1) {
+                echo "<div style='color:green;'>Registration successful! <a href='login.php'>Login here</a></div>";
+            }
+        }
+    } catch (Exception $e) {
+        echo "Error: " . $e->getMessage();
     }
 }
 ?>
@@ -26,20 +36,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <title>Sign Up</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        input { display: block; width: 250px; margin-bottom: 10px; padding: 10px; }
+        body { font-family: Arial; display: flex; justify-content: center; padding-top: 50px; background: #f4f4f4; }
+        form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; box-sizing: border-box; }
         button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
     </style>
 </head>
 <body>
-    <form method="POST">
-        <h2>Sign Up</h2>
-        <p><?php echo $message; ?></p>
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <button type="submit">Register</button>
-        <p>Already have an account? <a href="login.php">Login</a></p>
-    </form>
+
+<form method="POST">
+    <h2>Create Account</h2>
+    <input type="text" name="username" placeholder="Username" required>
+    
+    <!-- IMPORTANT: The new Email input -->
+    <input type="email" name="email" placeholder="Email Address" required>
+    
+    <input type="password" name="password" placeholder="Password" required>
+    <button type="submit">Sign Up</button>
+    <p>Already have an account? <a href="login.php">Login</a></p>
+</form>
+
 </body>
 </html>
