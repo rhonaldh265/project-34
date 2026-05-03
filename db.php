@@ -1,14 +1,23 @@
 <?php
+// This line is mandatory for Render to find the MongoDB library
 require 'vendor/autoload.php';
 
-// Replace with your real Atlas connection string
-$connectionString = "mongodb+srv://<username>:<password>@cluster.mongodb.net/";
+// 1. YOUR CONNECTION STRING
+// REPLACE 'YourRealPasswordHere' with the password you set in MongoDB Atlas Database Access
+$pass = "YourRealPasswordHere"; 
+$connectionString = "mongodb+srv://ronaldkiprotich001_db_user:" . $pass . "@cluster0.euqh3vy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 try {
+    // 2. CREATE THE CLIENT
     $client = new MongoDB\Client($connectionString);
-    // This will create a database named 'auth_db' and a collection 'users'
-    $collection = $client->auth_db->users;
+
+    // 3. SELECT DATABASE AND COLLECTION
+    // This will automatically create 'test_db' and 'users' if they don't exist
+    $db = $client->selectDatabase('test_db');
+    $collection = $db->selectCollection('users');
+
 } catch (Exception $e) {
-    die("Error connecting to database: " . $e->getMessage());
+    // If the password or network access is wrong, this will tell you why
+    die("Database Connection Error: " . $e->getMessage());
 }
 ?>
