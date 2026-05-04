@@ -4,7 +4,8 @@ require 'db.php'; // This connects to your MongoDB
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email']; // New email field
-    $password = password_hash ($_POST['password'], PASSWORD_DEFAULT);
+      $password = $_POST['password']; 
+  //  $password = password_hash ($_POST['password'], PASSWORD_DEFAULT);
 
     try {
         // 1. Check if the email is already in the database
