@@ -47,13 +47,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <form method="POST">
     <h2>Create Account</h2>
+
+    <h8>Username</h8>
     <input type="text" name="username" placeholder="Username" required>
     
-    <!-- IMPORTANT: The new Email input -->
+ 
+   <h8>Email</h8>
+    <input type="email" name="email" placeholder="x.@mail.com" required>
 
-   
-    <input type="email" name="email" placeholder="Email Address" required>
-    
+    <h8>Password</h8>
     <input type="password" name="password" placeholder="Password" required>
     <button type="submit">Sign Up</button>
     <p>Already have an account? <a href="login.php">Login</a></p>
