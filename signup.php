@@ -50,8 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="text" name="username" placeholder="Username" required>
     
     <!-- IMPORTANT: The new Email input -->
-   
-    <  <p>Email</p> input type="email" name="email" placeholder="Email Address" required>
+
+    <h6>Email</h6>
+    <   input type="email" name="email" placeholder="Email Address" required>
     
     <input type="password" name="password" placeholder="Password" required>
     <button type="submit">Sign Up</button>
